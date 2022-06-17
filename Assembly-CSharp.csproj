@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{2EDF7198-9D5F-41DF-F0F3-CCE5278520CB}</ProjectGuid>
+    <ProjectGuid>{33AFF5B6-3750-4E51-8E75-36292C3B15F7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -57,6 +57,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\RotateCube.cs" />
+    <Compile Include="Assets\Scripts\ReadCube.cs" />
+    <Compile Include="Assets\Scripts\CubeState.cs" />
+    <Compile Include="Assets\Scripts\CubeMap.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class RotateCube : MonoBehaviour
 {
-    public GameObject target;
     public float speed = 50f;
     bool drag = false;
     float x = 0;
@@ -36,7 +35,7 @@ public class RotateCube : MonoBehaviour
             x = Input.GetAxis("Mouse X") * speed * Time.fixedDeltaTime;
             y = Input.GetAxis("Mouse Y") * speed * Time.fixedDeltaTime;
 
-            target.transform.Rotate(y, -x, 0, Space.World);
+            this.transform.Rotate(y, -x, 0, Space.World);
         }
     }
 }
