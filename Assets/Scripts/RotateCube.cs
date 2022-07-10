@@ -8,7 +8,6 @@ public class RotateCube : MonoBehaviour
     bool drag = false;
     float x = 0;
     float y = 0;
-    // Start is called before the first frame update
 
     // Update is called once per frame
     void Update()

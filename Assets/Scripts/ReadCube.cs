@@ -11,51 +11,104 @@ public class ReadCube : MonoBehaviour
     public Transform tFront;
     public Transform tBack;
 
+    private List<GameObject> frontRays = new List<GameObject>();
+    private List<GameObject> backRays = new List<GameObject>();
+    private List<GameObject> leftRays = new List<GameObject>();
+    private List<GameObject> rightRays = new List<GameObject>();
+    private List<GameObject> upRays = new List<GameObject>();
+    private List<GameObject> downRays = new List<GameObject>();
+
     private int layerMask = 1 << 8; //only for the faces of the cube
 
     CubeState cubeState;
     CubeMap cubeMap;
+
+    public GameObject emptyGO;
     // Start is called before the first frame update
     void Start()
     {
+        SetRayTransforms();
+        this.transform.rotation = Quaternion.Euler(0, 45, 0);//Set the rotation of the cube to prevent faulty ray detection
         cubeState = FindObjectOfType<CubeState>();
         cubeMap = FindObjectOfType<CubeMap>();
-        List<GameObject> facesHit = new List<GameObject>();
-        Vector3 ray = tFront.transform.position;
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, tFront.right, out hit, Mathf.Infinity, layerMask))
-        {
-            Debug.DrawRay(ray, tFront.right * hit.distance, Color.yellow);
-            facesHit.Add(hit.collider.gameObject);
-            print(hit.collider.gameObject);
-        }
-        else
-        {
-            Debug.DrawRay(ray, tFront.right * 1000, Color.green);
-        }
-        cubeState.front = facesHit;
-        cubeMap.Set();
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*List<GameObject> facesHit = new List<GameObject>();
-        Vector3 ray = tFront.transform.position;
-        RaycastHit hit;
+        ReadState();
+    }
 
-        if(Physics.Raycast(ray, tFront.right, out hit, Mathf.Infinity, layerMask))
+    public void ReadState()
+    {
+        cubeState = FindObjectOfType<CubeState>();
+        cubeMap = FindObjectOfType<CubeMap>();
+
+        cubeState.up = ReadFace(upRays, tUp);
+        cubeState.down = ReadFace(downRays, tDown);
+        cubeState.left = ReadFace(leftRays, tLeft);
+        cubeState.right = ReadFace(rightRays, tRight);
+        cubeState.front = ReadFace(frontRays, tFront);
+        cubeState.back = ReadFace(backRays, tBack);
+        
+        cubeMap.Set();
+    }
+
+    void SetRayTransforms()
+    {
+        upRays = BuildRays(tUp, new Vector3(90, 90, 0));
+        downRays = BuildRays(tDown, new Vector3(270, 90, 0));
+        leftRays = BuildRays(tLeft, new Vector3(0, 180, 0));
+        rightRays = BuildRays(tRight, new Vector3(0, 0, 0));
+        frontRays = BuildRays(tFront, new Vector3(0, 90, 0));
+        backRays = BuildRays(tBack, new Vector3(0, 270, 0));
+    }
+
+    List<GameObject> BuildRays(Transform rayTransform, Vector3 direction)
+    {
+        int rayCount = 0;
+        List<GameObject> rays = new List<GameObject>();
+
+        for (int y = 1; y > -2; y--)
         {
-            Debug.DrawRay(ray, tFront.right * hit.distance, Color.yellow);
-            facesHit.Add(hit.collider.gameObject);
-            print(hit.collider.gameObject);
+            for (int x = -1; x < 2; x++)
+            {
+                Debug.Log(string.Format("Ray {0} {1}", x, y));
+                Vector3 startPos = new Vector3(rayTransform.position.x + x, rayTransform.position.y + y, rayTransform.position.z);
+                Debug.Log(string.Format("StartPos {0}", startPos));
+                GameObject rayStart = Instantiate(emptyGO, startPos, Quaternion.identity, rayTransform);
+                rayStart.name = rayCount.ToString();
+                rays.Add(rayStart);
+                rayCount++;
+            }
         }
-        else
+        rayTransform.localRotation = Quaternion.Euler(direction);
+        return rays;
+    }
+
+    public List<GameObject> ReadFace(List<GameObject> rayStarts, Transform rayTransform)
+    {
+        List<GameObject> facesHit = new List<GameObject>();
+        
+
+        foreach(GameObject rayStart in rayStarts)
         {
-            Debug.DrawRay(ray, tFront.right * 1000, Color.green);
+            Vector3 ray = rayStart.transform.position;
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, rayTransform.forward, out hit, Mathf.Infinity, layerMask))
+            {
+                Debug.DrawRay(ray, rayTransform.forward * hit.distance, Color.yellow);
+                facesHit.Add(hit.collider.gameObject);
+                //print(hit.collider.gameObject);
+            }
+            else
+            {
+                Debug.DrawRay(ray, tFront.right * 1000, Color.green);
+            }
         }
-        cubeState.front = facesHit;
-        cubeMap.Set();*/
+
+        
+        return facesHit;
     }
 }
