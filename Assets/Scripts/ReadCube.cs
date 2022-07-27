@@ -28,15 +28,16 @@ public class ReadCube : MonoBehaviour
     void Start()
     {
         SetRayTransforms();
-        this.transform.rotation = Quaternion.Euler(0, 45, 0);//Set the rotation of the cube to prevent faulty ray detection
+        
         cubeState = FindObjectOfType<CubeState>();
         cubeMap = FindObjectOfType<CubeMap>();
+        ReadState();
     }
 
     // Update is called once per frame
     void Update()
     {
-        ReadState();
+
     }
 
     public void ReadState()
@@ -73,9 +74,7 @@ public class ReadCube : MonoBehaviour
         {
             for (int x = -1; x < 2; x++)
             {
-                Debug.Log(string.Format("Ray {0} {1}", x, y));
                 Vector3 startPos = new Vector3(rayTransform.position.x + x, rayTransform.position.y + y, rayTransform.position.z);
-                Debug.Log(string.Format("StartPos {0}", startPos));
                 GameObject rayStart = Instantiate(emptyGO, startPos, Quaternion.identity, rayTransform);
                 rayStart.name = rayCount.ToString();
                 rays.Add(rayStart);
