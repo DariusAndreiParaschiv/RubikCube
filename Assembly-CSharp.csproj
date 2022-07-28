@@ -56,12 +56,12 @@
     <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\PivotRotation.cs" />
+    <Compile Include="Assets\Scripts\SelectSide.cs" />
     <Compile Include="Assets\Scripts\RotateCube.cs" />
     <Compile Include="Assets\Scripts\CubeState.cs" />
     <Compile Include="Assets\Scripts\ReadCube.cs" />
     <Compile Include="Assets\Scripts\CubeMap.cs" />
-    <Compile Include="Assets\Scripts\SelectSide.cs" />
-    <Compile Include="Assets\PivotRotation.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

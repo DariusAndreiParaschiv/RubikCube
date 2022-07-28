@@ -8,7 +8,7 @@ public class PivotRotation : MonoBehaviour
     //private Vector3 localForward;
     //private Vector3 mouseRef;
     private bool drag = false;
-    private bool autoRotation = false;
+    private bool rotating = false;
     private float sensitivity = 0.4f;
     private float rotationSpeed = 300f;
     private Vector3 rotation;
@@ -38,7 +38,7 @@ public class PivotRotation : MonoBehaviour
                 RightRotateAngle();
             }
         }
-        if(autoRotation)
+        if(rotating)
         {
             RotateToPosition();
         }
@@ -105,7 +105,7 @@ public class PivotRotation : MonoBehaviour
         angleVector.z = Mathf.Round(angleVector.z / 90) * 90;
 
         targetQuaternion.eulerAngles = angleVector;
-        autoRotation = true;
+        rotating = true;
     }
     /// <summary>
     /// Snap the rotating face into the nearest position
@@ -121,7 +121,7 @@ public class PivotRotation : MonoBehaviour
             transform.localRotation = targetQuaternion;
             cubeState.PutDown(activeSide, transform.parent);
             readCube.ReadState();
-            autoRotation = false;
+            rotating = false;
         }
     }
 }

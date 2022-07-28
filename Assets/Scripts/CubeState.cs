@@ -11,23 +11,8 @@ public class CubeState : MonoBehaviour
     public List<GameObject> left = new List<GameObject>();
     public List<GameObject> right = new List<GameObject>();
 
-    /*public List<GameObject> rotateRight = new List<GameObject>();
-    public List<GameObject> rotateCenter = new List<GameObject>();
-    public List<GameObject> rotateLeft = new List<GameObject>();
-    public List<GameObject> rotateUp = new List<GameObject>();
-    public List<GameObject> rotateMiddle = new List<GameObject>();
-    public List<GameObject> rotateDown = new List<GameObject>();*/
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public static bool shuffle = false;
+    public static bool started = false;
 
     public void PickUp(List<GameObject> cubeSide)
     {
@@ -39,14 +24,16 @@ public class CubeState : MonoBehaviour
                 face.transform.parent.transform.parent = cubeSide[4].transform.parent;
             }
         }
-        cubeSide[4].transform.parent.GetComponent<PivotRotation>().Rotate(cubeSide);
     }
 
     public void PutDown(List<GameObject> cubeSide, Transform pivot)
     {
         foreach(GameObject cublet in cubeSide)
         {
-            cublet.transform.parent.transform.parent = pivot;
+            if(cublet != cubeSide[4])
+            {
+                cublet.transform.parent.transform.parent = pivot;
+            }
         }
     }
 }

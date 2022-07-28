@@ -43,6 +43,7 @@ public class SelectSide : MonoBehaviour
                     if(cubeSide.Contains(face))
                     {
                         cubeState.PickUp(cubeSide);
+                        cubeSide[4].transform.parent.GetComponent<PivotRotation>().Rotate(cubeSide);
                     }
                 }
             }

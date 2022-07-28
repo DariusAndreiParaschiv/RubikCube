@@ -9,8 +9,8 @@ public class RotateCube : MonoBehaviour
     public float lateralX = 3;
     public float lateralY = 1;
     public float lateralZ = -3;
-    private bool rotate = false;
     private bool reposition = false;
+    private bool canTouch = true;
     Vector3 angleVector;
     bool drag = false;
     float x = 0;
@@ -23,48 +23,38 @@ public class RotateCube : MonoBehaviour
         {
             drag = false;
         }
-        if(Input.GetMouseButtonDown(1))
+        if(Input.GetMouseButtonDown(1) && canTouch)
         {
             drag = true;
         }
-        //reset cube rotation to default
-        if (Input.GetKeyDown("r"))
-        {
-            rotate = true;
-               
-        }
         //position the cube upright
-        if (Input.GetKeyDown("t"))
+        if (Input.GetKeyDown("space") && !drag)
         {
             CubeRepositionAngles();
+            canTouch = false;
             reposition = true; 
         }
-        //signal to rotate
-        if (rotate)
-        {
-            RotateTo(Quaternion.Euler(0, 0, 0));
-            if (transform.localRotation == Quaternion.Euler(0, 0, 0))
-            {
-                rotate = false;
-            }
-        }
+        //create smooth animation of the cube rotating to the upright position
         if (reposition)
         {
-            RotateTo(Quaternion.Euler(angleVector.x, angleVector.y, angleVector.z));
-            if (transform.localRotation == Quaternion.Euler(angleVector.x, angleVector.y, angleVector.z))
+            var step = 300f * Time.deltaTime;
+            if(transform.localRotation == Quaternion.Euler(angleVector.x, angleVector.y, angleVector.z))
             {
                 reposition = false;
+                canTouch = true;
             }
+            if (transform.localRotation != Quaternion.Euler(angleVector.x, angleVector.y, angleVector.z))
+            {
+                transform.localRotation = Quaternion.RotateTowards(transform.localRotation, Quaternion.Euler(angleVector.x, angleVector.y, angleVector.z), step);
+            }     
         }
     }
 
-    private void RotateTo(Quaternion targetRotation)
+    public void CubeReposition()
     {
-        var step = 300f * Time.deltaTime;
-        if (transform.localRotation != targetRotation)
-        {
-            transform.localRotation = Quaternion.RotateTowards(transform.localRotation, targetRotation, step);
-        }
+        CubeRepositionAngles();
+        canTouch = false;
+        reposition = true;
     }
 
     /// <summary>
