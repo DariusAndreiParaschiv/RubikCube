@@ -5,8 +5,6 @@ using UnityEngine;
 public class PivotRotation : MonoBehaviour
 {
     private List<GameObject> activeSide;
-    //private Vector3 localForward;
-    //private Vector3 mouseRef;
     private bool drag = false;
     private bool rotating = false;
     private float sensitivity = 0.4f;
@@ -48,50 +46,38 @@ public class PivotRotation : MonoBehaviour
     {
         rotation = Vector3.zero;
 
-        //Vector3 mouseOffSet = (Input.mousePosition - mouseRef);
-
         if(side[0] == cubeState.front[0])
         {
-            //rotation.x = (mouseOffSet.x + mouseOffSet.y) * -sensitivity;
-            rotation.x = (Input.GetAxis("Mouse X") * speed * Time.fixedDeltaTime + Input.GetAxis("Mouse Y") * speed * Time.fixedDeltaTime) * -sensitivity;
+            rotation.x = (Input.GetAxis("Mouse X") * speed * Time.fixedDeltaTime) * -sensitivity;
         }
         if (side[0] == cubeState.back[0])
         {
-            //rotation.x = (mouseOffSet.x + mouseOffSet.y) * -sensitivity;
-            rotation.x = (Input.GetAxis("Mouse X") * speed * Time.fixedDeltaTime + Input.GetAxis("Mouse Y") * speed * Time.fixedDeltaTime) * sensitivity;
+            rotation.x = (Input.GetAxis("Mouse X") * speed * Time.fixedDeltaTime) * sensitivity;
         }
         if (side[0] == cubeState.up[0])
         {
-            //rotation.x = (mouseOffSet.x + mouseOffSet.y) * -sensitivity;
-            rotation.y = (Input.GetAxis("Mouse X") * speed * Time.fixedDeltaTime + Input.GetAxis("Mouse Y") * speed * Time.fixedDeltaTime) * sensitivity;
+            rotation.y = (Input.GetAxis("Mouse X") * speed * Time.fixedDeltaTime) * sensitivity;
         }
         if (side[0] == cubeState.down[0])
         {
-            //rotation.x = (mouseOffSet.x + mouseOffSet.y) * -sensitivity;
-            rotation.y = (Input.GetAxis("Mouse X") * speed * Time.fixedDeltaTime + Input.GetAxis("Mouse Y") * speed * Time.fixedDeltaTime) * -sensitivity;
+            rotation.y = (Input.GetAxis("Mouse X") * speed * Time.fixedDeltaTime) * -sensitivity;
         }
         if (side[0] == cubeState.left[0])
         {
-            //rotation.x = (mouseOffSet.x + mouseOffSet.y) * -sensitivity;
-            rotation.z = (Input.GetAxis("Mouse X") * speed * Time.fixedDeltaTime + Input.GetAxis("Mouse Y") * speed * Time.fixedDeltaTime) * sensitivity;
+            rotation.z = (Input.GetAxis("Mouse X") * speed * Time.fixedDeltaTime) * sensitivity;
         }
         if (side[0] == cubeState.right[0])
         {
-            //rotation.x = (mouseOffSet.x + mouseOffSet.y) * -sensitivity;
-            rotation.z = (Input.GetAxis("Mouse X") * speed * Time.fixedDeltaTime + Input.GetAxis("Mouse Y") * speed * Time.fixedDeltaTime) * -sensitivity;
+            rotation.z = (Input.GetAxis("Mouse X") * speed * Time.fixedDeltaTime) * -sensitivity;
         }
 
         transform.Rotate(rotation, Space.Self);
-
-        //mouseRef = Input.mousePosition;
     }
 
     public void Rotate(List<GameObject> side)
     {
         activeSide = side;
-        //mouseRef = Input.mousePosition;
         drag = true;
-        //localForward = Vector3.zero - side[4].transform.parent.transform.localPosition;
     }
     /// <summary>
     /// Calculate values for the right angles when snapping rotating face into position
