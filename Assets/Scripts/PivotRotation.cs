@@ -79,6 +79,16 @@ public class PivotRotation : MonoBehaviour
         activeSide = side;
         drag = true;
     }
+
+    public void StartAutoRotate(List<GameObject> side, float angle)
+    {
+        cubeState.PickUp(side);
+        Vector3 localForward = Vector3.zero - side[4].transform.parent.transform.localPosition;
+        targetQuaternion = Quaternion.AngleAxis(angle, localForward) * transform.localRotation;
+        activeSide = side;
+        rotating = true;
+    }
+
     /// <summary>
     /// Calculate values for the right angles when snapping rotating face into position
     /// </summary>
@@ -108,6 +118,7 @@ public class PivotRotation : MonoBehaviour
             cubeState.PutDown(activeSide, transform.parent);
             readCube.ReadState();
             rotating = false;
+            CubeState.shuffle = false;
         }
     }
 }

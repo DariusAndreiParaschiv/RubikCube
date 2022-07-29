@@ -20,6 +20,8 @@ public class SelectSide : MonoBehaviour
         //Group cublets to rotate the face
         if(Input.GetMouseButtonDown(0))
         {
+            readCube.ReadState();
+
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -47,7 +49,6 @@ public class SelectSide : MonoBehaviour
                     }
                 }
             }
-            readCube.ReadState();
         }
     }
 }
