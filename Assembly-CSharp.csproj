@@ -62,6 +62,7 @@
     <Compile Include="Assets\Scripts\CubeState.cs" />
     <Compile Include="Assets\Scripts\ReadCube.cs" />
     <Compile Include="Assets\Scripts\CubeMap.cs" />
+    <Compile Include="Assets\Scripts\Shuffle.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
