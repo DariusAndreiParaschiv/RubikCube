@@ -24,10 +24,9 @@ public class PivotRotation : MonoBehaviour
         cubeState = FindObjectOfType<CubeState>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-        if(drag)
+        if(drag && !rotating)
         {
             RotateSide(activeSide);
             if(Input.GetMouseButtonUp(0))
@@ -87,6 +86,7 @@ public class PivotRotation : MonoBehaviour
         targetQuaternion = Quaternion.AngleAxis(angle, localForward) * transform.localRotation;
         activeSide = side;
         rotating = true;
+        drag = false;
     }
 
     /// <summary>
@@ -109,7 +109,7 @@ public class PivotRotation : MonoBehaviour
     private void RotateToPosition()
     {
         drag = false;
-        var step = rotationSpeed * Time.deltaTime;
+        var step = 3 * rotationSpeed * Time.deltaTime;
         transform.localRotation = Quaternion.RotateTowards(transform.localRotation, targetQuaternion, step);
 
         if(Quaternion.Angle(transform.localRotation, targetQuaternion) <= 1)
@@ -118,7 +118,7 @@ public class PivotRotation : MonoBehaviour
             cubeState.PutDown(activeSide, transform.parent);
             readCube.ReadState();
             rotating = false;
-            CubeState.shuffle = false;
+            CubeState.autoRotating = false;
         }
     }
 }

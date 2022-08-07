@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Shuffle : MonoBehaviour
+public class AutoRotation : MonoBehaviour
 {
     public static List<string> moves = new List<string>() { };
     private readonly List<string> moveList = new List<string>()
@@ -13,25 +14,33 @@ public class Shuffle : MonoBehaviour
 
     private CubeState cubeState;
     private ReadCube readCube;
+    private Button shuffleButton;
 
     // Start is called before the first frame update
     void Start()
     {
         cubeState = FindObjectOfType<CubeState>();
         readCube = FindObjectOfType<ReadCube>();
+        shuffleButton = GameObject.Find("Shuffle").GetComponent<Button>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (moves.Count > 0 && !CubeState.shuffle)// && CubeState.started
+        if (CubeState.autoRotating || moves.Count > 0)
         {
-            //Do the move at the first index;
+            shuffleButton.interactable = false;
+        }
+        if (!CubeState.autoRotating)
+        {
+            shuffleButton.interactable = true;
+        }
+        if (moves.Count > 0 && !CubeState.autoRotating && CubeState.started)
+        {
             DoMove(moves[0]);
 
-            // remove the move at the first index
             moves.Remove(moves[0]);
-        }
+        } 
     }
 
     public void StartShuffle()
@@ -43,7 +52,7 @@ public class Shuffle : MonoBehaviour
             int randomMove = Random.Range(0, moveList.Count);
             movesGenerator.Add(moveList[randomMove]);
         }
-        CubeState.shuffle = false;
+        CubeState.autoRotating = false;
         moves = movesGenerator;
     }
 
@@ -51,7 +60,7 @@ public class Shuffle : MonoBehaviour
     void DoMove(string move)
     {
         readCube.ReadState();
-        CubeState.shuffle = true;
+        CubeState.autoRotating = true;
         if (move == "U")
         {
             RotateSide(cubeState.up, -90);
@@ -129,7 +138,6 @@ public class Shuffle : MonoBehaviour
 
     void RotateSide(List<GameObject> side, float angle)
     {
-        // automatically rotate the side by the angle
         PivotRotation pr = side[4].transform.parent.GetComponent<PivotRotation>();
         pr.StartAutoRotate(side, angle);
     }

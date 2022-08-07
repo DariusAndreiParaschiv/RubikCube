@@ -31,6 +31,7 @@ public class ReadCube : MonoBehaviour
         
         cubeState = FindObjectOfType<CubeState>();
         cubeMap = FindObjectOfType<CubeMap>();
+        CubeState.started = true;
         ReadState();
     }
 

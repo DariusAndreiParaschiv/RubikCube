@@ -11,8 +11,17 @@ public class CubeState : MonoBehaviour
     public List<GameObject> left = new List<GameObject>();
     public List<GameObject> right = new List<GameObject>();
 
-    public static bool shuffle = false;
+    public static bool autoRotating = false;
     public static bool started = false;
+
+    public static string initialConfig;
+    public static List<string> initialConfigList = new List<string>() { };
+
+    private void Start()
+    {
+        initialConfig = GetState();
+        initialConfigList = StringToList(initialConfig);
+    }
 
     public void PickUp(List<GameObject> cubeSide)
     {
@@ -35,5 +44,35 @@ public class CubeState : MonoBehaviour
                 cublet.transform.parent.transform.parent = pivot;
             }
         }
+    }
+
+    private string GetSide(List<GameObject> side)
+    {
+        string sideString = "";
+
+        foreach(GameObject face in side)
+        {
+            sideString += face.name[0].ToString();
+        }
+
+        return sideString;
+    }
+
+    public string GetState()
+    {
+        string stateString = "";
+        stateString += GetSide(up);
+        stateString += GetSide(right);
+        stateString += GetSide(front);
+        stateString += GetSide(down);
+        stateString += GetSide(left);
+        stateString += GetSide(back);
+        return stateString;
+    }
+
+    public static List<string> StringToList(string solution)
+    {
+        List<string> solutionList = new List<string>(solution.Split(new string[] { " " }, System.StringSplitOptions.RemoveEmptyEntries));
+        return solutionList;
     }
 }

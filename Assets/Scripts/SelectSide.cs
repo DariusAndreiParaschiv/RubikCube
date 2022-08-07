@@ -18,7 +18,7 @@ public class SelectSide : MonoBehaviour
     void Update()
     {
         //Group cublets to rotate the face
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetMouseButtonDown(0) && !CubeState.autoRotating)
         {
             readCube.ReadState();
 

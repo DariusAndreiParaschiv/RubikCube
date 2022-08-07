@@ -11,7 +11,8 @@ public class RotateCube : MonoBehaviour
     public float lateralZ = -3;
     private bool reposition = false;
     private bool canTouch = true;
-    Vector3 angleVector;
+    private Vector3 angleVector;
+    private Quaternion targetQuaternion;
     bool drag = false;
     float x = 0;
     float y = 0;
@@ -27,29 +28,24 @@ public class RotateCube : MonoBehaviour
         {
             drag = true;
         }
-        //position the cube upright
-        if (Input.GetKeyDown("space") && !drag)
-        {
-            CubeRepositionAngles();
-            canTouch = false;
-            reposition = true; 
-        }
         //create smooth animation of the cube rotating to the upright position
         if (reposition)
         {
             var step = 300f * Time.deltaTime;
-            if(transform.localRotation == Quaternion.Euler(angleVector.x, angleVector.y, angleVector.z))
+            if(Quaternion.Angle(transform.localRotation, targetQuaternion) <= 1)
             {
                 reposition = false;
                 canTouch = true;
             }
-            if (transform.localRotation != Quaternion.Euler(angleVector.x, angleVector.y, angleVector.z))
+            else
             {
-                transform.localRotation = Quaternion.RotateTowards(transform.localRotation, Quaternion.Euler(angleVector.x, angleVector.y, angleVector.z), step);
+                transform.localRotation = Quaternion.RotateTowards(transform.localRotation, targetQuaternion, step);
             }     
         }
     }
-
+    /// <summary>
+    /// position the cube upright
+    /// </summary>
     public void CubeReposition()
     {
         CubeRepositionAngles();
@@ -68,6 +64,7 @@ public class RotateCube : MonoBehaviour
         angleVector.x = Mathf.Round(angleVector.x / 90) * 90;
         angleVector.y = Mathf.Round(angleVector.y / 90) * 90;
         angleVector.z = Mathf.Round(angleVector.z / 90) * 90;
+        targetQuaternion.eulerAngles = angleVector;
     }
 
     void FixedUpdate()
