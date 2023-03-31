@@ -26,16 +26,16 @@ public class PivotRotation : MonoBehaviour
 
     void LateUpdate()
     {
-        if(drag && !rotating)
+        if (drag && !rotating)
         {
             RotateSide(activeSide);
-            if(Input.GetMouseButtonUp(0))
+            if (Input.GetMouseButtonUp(0))
             {
                 drag = false;
                 RightRotateAngle();
             }
         }
-        if(rotating)
+        if (rotating)
         {
             RotateToPosition();
         }
@@ -45,7 +45,7 @@ public class PivotRotation : MonoBehaviour
     {
         rotation = Vector3.zero;
 
-        if(side[0] == cubeState.front[0])
+        if (side[0] == cubeState.front[0])
         {
             rotation.x = (Input.GetAxis("Mouse X") * speed * Time.fixedDeltaTime) * -sensitivity;
         }
@@ -112,7 +112,7 @@ public class PivotRotation : MonoBehaviour
         var step = 3 * rotationSpeed * Time.deltaTime;
         transform.localRotation = Quaternion.RotateTowards(transform.localRotation, targetQuaternion, step);
 
-        if(Quaternion.Angle(transform.localRotation, targetQuaternion) <= 1)
+        if (Quaternion.Angle(transform.localRotation, targetQuaternion) <= 1)
         {
             transform.localRotation = targetQuaternion;
             cubeState.PutDown(activeSide, transform.parent);
