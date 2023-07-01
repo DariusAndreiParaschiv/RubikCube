@@ -41,7 +41,6 @@ public class SelectSide : MonoBehaviour
 
                 foreach(List<GameObject> cubeSide in cubeSides)
                 {
-                    //cubeSide.
                     if(cubeSide.Contains(face))
                     {
                         cubeState.PickUp(cubeSide);

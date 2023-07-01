@@ -50,6 +50,7 @@
      <Compile Include="Assets\Kociemba-Unity\K_Tools.cs" />
      <Compile Include="Assets\Kociemba-Unity\K_CoordCubeBuildTables.cs" />
      <Compile Include="Assets\Kociemba-Unity\K_SearchRunTime.cs" />
+     <Compile Include="Assets\Scripts\PivotRotation.cs" />
      <Compile Include="Assets\Scripts\ConfigDegree.cs" />
      <Compile Include="Assets\Kociemba-Unity\K_CoordCube.cs" />
      <Compile Include="Assets\Scripts\SelectSide.cs" />

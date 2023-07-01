@@ -76,7 +76,5 @@ public class RotateCube : MonoBehaviour
 
             this.transform.Rotate(y, -x, y, Space.World);
         }
-        //lateral rotation, not yet to be used
-        //this.transform.Rotate(Input.mouseScrollDelta.y * lateralX * lateralRotationSpeed, Input.mouseScrollDelta.y * lateralY * lateralRotationSpeed, Input.mouseScrollDelta.y * lateralZ * lateralRotationSpeed, Space.World);
     }
 }
